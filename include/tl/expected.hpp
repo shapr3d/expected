@@ -16,6 +16,10 @@
 #ifndef TL_EXPECTED_HPP
 #define TL_EXPECTED_HPP
 
+#ifndef SHAPR_ENABLE_EXPECTED_EXTENSIONS
+#define SHAPR_ENABLE_EXPECTED_EXTENSIONS 0
+#endif
+
 #define TL_EXPECTED_VERSION_MAJOR 1
 #define TL_EXPECTED_VERSION_MINOR 0
 #define TL_EXPECTED_VERSION_PATCH 1
@@ -1251,6 +1255,8 @@ public:
   typedef E error_type;
   typedef unexpected<E> unexpected_type;
 
+#if SHAPR_ENABLE_EXPECTED_EXTENSIONS
+
 #if defined(TL_EXPECTED_CXX14) && !defined(TL_EXPECTED_GCC49) &&               \
     !defined(TL_EXPECTED_GCC54) && !defined(TL_EXPECTED_GCC55)
   template <class F> TL_EXPECTED_11_CONSTEXPR auto and_then(F &&f) & {
@@ -1339,6 +1345,8 @@ public:
 #endif
 #endif
 
+#endif // SHAPR_ENABLE_EXPECTED_EXTENSIONS
+
 #if defined(TL_EXPECTED_CXX14) && !defined(TL_EXPECTED_GCC49) &&               \
     !defined(TL_EXPECTED_GCC54) && !defined(TL_EXPECTED_GCC55)
     template <class F> TL_EXPECTED_11_CONSTEXPR auto transform(F &&f) & {
@@ -1382,6 +1390,8 @@ public:
   }
 #endif
 #endif
+
+#if SHAPR_ENABLE_EXPECTED_EXTENSIONS
 
 #if defined(TL_EXPECTED_CXX14) && !defined(TL_EXPECTED_GCC49) &&               \
     !defined(TL_EXPECTED_GCC54) && !defined(TL_EXPECTED_GCC55)
@@ -1443,6 +1453,9 @@ public:
     return or_else_impl(std::move(*this), std::forward<F>(f));
   }
 #endif
+
+#endif // SHAPR_ENABLE_EXPECTED_EXTENSIONS
+
   constexpr expected() = default;
   constexpr expected(const expected &rhs) = default;
   constexpr expected(expected &&rhs) = default;
